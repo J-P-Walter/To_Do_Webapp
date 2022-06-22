@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+
+<script>
+var something = document.getElementById('task');
+something.style.cursor = 'pointer';
+something.onmouseover = function() {
+    this.style.backgroundColor = 'red';
+};
+something.onmouseout = function() {
+    this.style.backgroundColor = '';
+};
+</script>
+
+
+
+{% block content %}
+    
+        {% if prev_tasks %}
+            <div>
+                <h1> Previous Tasks </h1>
+                {% for task in prev_tasks %}
+                    {% if task.done == False %}
+                        <div class="task">
+                            <p>{{task.title}}</p>
+                            <p>{{task.description}}</p>
+                            <p>{{task.date}}</p>
+                        </div>
+                    {% else %}
+                    <div class="task done">
+                        <p>{{task.title}}</p>
+                        <p>{{task.description}}</p>
+                        <p>{{task.date}}</p>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if today_tasks %}
+            <div>
+                <h1> Today's Tasks </h1>
+                {% for task in today_tasks %}
+                    {% if task.done == False %}
+                    <div class="task">
+                        <p>{{task.title}}</p>
+                        <p>{{task.description}}</p>
+                        <p>{{task.date}}</p>
+                    </div>
+                    {% else %}
+                    <div class="task done">
+                        <p>{{task.title}}</p>
+                        <p>{{task.description}}</p>
+                        <p>{{task.date}}</p>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if week_tasks %}
+            <div>
+                <h1> This Week's Tasks </h1>
+                {% for task in week_tasks %}
+                    {% if task.done == False %}
+                    <div class="task">
+                        <p>{{task.title}}</p>
+                        <p>{{task.description}}</p>
+                        <p>{{task.date}}</p>
+                    </div>
+                    {% else %}
+                    <div class="task done">
+                        <p>{{task.title}}</p>
+                        <p>{{task.description}}</p>
+                        <p>{{task.date}}</p>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if future_tasks %}
+            <div>
+                <h1> Future Tasks </h1>
+                {% for task in future_tasks %}
+                        <div class="task">
+                            <p>{{task.title}}</p>
+                            <p>{{task.description}}</p>
+                            <p>{{task.date}}</p>
+                        </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+{% endblock %} 
