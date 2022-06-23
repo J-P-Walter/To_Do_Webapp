@@ -41,19 +41,30 @@ something.onmouseout = function() {
             <div>
                 <h1> Today's Tasks </h1>
                 {% for task in today_tasks %}
-                    {% if task.done == False %}
-                    <div class="task">
-                        <p>{{task.title}}</p>
-                        <p>{{task.description}}</p>
-                        <p>{{task.date}}</p>
-                    </div>
-                    {% else %}
-                    <div class="task done">
-                        <p>{{task.title}}</p>
-                        <p>{{task.description}}</p>
-                        <p>{{task.date}}</p>
-                    </div>
-                    {% endif %}
+                    <div class="task row">
+                        <div class="column">
+                            {% if task.done == False %}
+                                <p>{{task.title}}</p>
+                                <p>{{task.description}}</p>
+                                <p>{{task.date}}</p>
+                            
+                            {% else %}
+                            
+                                <p>{{task.title}}</p>
+                                <p>{{task.description}}</p>
+                                <p>{{task.date}}</p>
+                            
+                            {% endif %}
+                        </div>
+                        <div class="column">
+                            <a href="http://127.0.0.1:8000/edit/{{task.id}}">Edit</a>
+                        </div>
+                        <div class="column">
+                            <a href="http://127.0.0.1:8000/delete/{{task.id}}">Delete</a>
+                        </div>
+                    </div>            
+                    
+
                 {% endfor %}
             </div>
         {% endif %}
@@ -75,6 +86,7 @@ something.onmouseout = function() {
                         <p>{{task.date}}</p>
                     </div>
                     {% endif %}
+
                 {% endfor %}
             </div>
         {% endif %}
@@ -83,11 +95,19 @@ something.onmouseout = function() {
             <div>
                 <h1> Future Tasks </h1>
                 {% for task in future_tasks %}
+                    {% if task.done == False %}
                         <div class="task">
                             <p>{{task.title}}</p>
                             <p>{{task.description}}</p>
                             <p>{{task.date}}</p>
                         </div>
+                        {% else %}
+                        <div class="task done">
+                            <p>{{task.title}}</p>
+                            <p>{{task.description}}</p>
+                            <p>{{task.date}}</p>
+                        </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         {% endif %}

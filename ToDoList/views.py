@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import ToDoList
 from .forms import ToDoListForm
 import datetime
@@ -39,8 +39,35 @@ def create_view(request):
     form = ToDoListForm(request.POST or None)
     if (form.is_valid()):
         form.save()
-        form = ToDoListForm()
+        #form = ToDoListForm()
+        return redirect('http://127.0.0.1:8000/')
     context = {
         'form': form
     }
     return render(request, "todo_create.html", context)
+
+def edit_view(request, id):
+    obj = ToDoList.objects.get(id=id)
+    
+    if request.method == 'POST':
+        form = ToDoListForm(request.POST, instance = obj)
+        if (form.is_valid()):
+            form.save()
+            #form = ToDoListForm()
+            return redirect('http://127.0.0.1:8000/')
+    else:
+        form = ToDoListForm(instance = obj)
+
+    context = {
+        'form': form
+    }
+    return render(request, "todo_edit.html", context)
+
+def delete_view(request, id):
+    obj = ToDoList.objects.get(id=id)
+    obj.delete()
+    return redirect('http://127.0.0.1:8000/')
+    context = {
+
+    }
+    return render(request, "home.html", context)
