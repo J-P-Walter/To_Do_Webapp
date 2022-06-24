@@ -1,21 +1,6 @@
 {% extends 'base.html' %}
 
-
-<script>
-var something = document.getElementById('task');
-something.style.cursor = 'pointer';
-something.onmouseover = function() {
-    this.style.backgroundColor = 'red';
-};
-something.onmouseout = function() {
-    this.style.backgroundColor = '';
-};
-</script>
-
-
-
 {% block content %}
-    
         {% if prev_tasks %}
             <div>
                 <h1> Previous Tasks </h1>
@@ -41,20 +26,20 @@ something.onmouseout = function() {
             <div>
                 <h1> Today's Tasks </h1>
                 {% for task in today_tasks %}
-                    <div class="task row">
-                        <div class="column">
-                            {% if task.done == False %}
+
+                <script>
+                    function myFunction() {
+                        var element = document.getElementById("{{task.id}}");
+                        element.classList.toggle("marked");
+                        window.location.href = 'http://127.0.0.1:8000/mark/{{task.id}}';
+                    }
+                </script> 
+                    {% if task.done == False %} 
+                    <div class="task row" id="{{task.id}}" onclick="myFunction()">
+                        <div class="column">                    
                                 <p>{{task.title}}</p>
                                 <p>{{task.description}}</p>
-                                <p>{{task.date}}</p>
-                            
-                            {% else %}
-                            
-                                <p>{{task.title}}</p>
-                                <p>{{task.description}}</p>
-                                <p>{{task.date}}</p>
-                            
-                            {% endif %}
+                                <p>{{task.date}}</p>               
                         </div>
                         <div class="column">
                             <a href="http://127.0.0.1:8000/edit/{{task.id}}">Edit</a>
@@ -62,7 +47,22 @@ something.onmouseout = function() {
                         <div class="column">
                             <a href="http://127.0.0.1:8000/delete/{{task.id}}">Delete</a>
                         </div>
-                    </div>            
+                    </div> 
+                    {% else %}
+                    <div class="task row marked" id="{{task.id}}" onclick="myFunction()">
+                        <div class="column">                    
+                                <p>{{task.title}}</p>
+                                <p>{{task.description}}</p>
+                                <p>{{task.date}}</p>               
+                        </div>
+                        <div class="column">
+                            <a href="http://127.0.0.1:8000/edit/{{task.id}}">Edit</a>
+                        </div>
+                        <div class="column">
+                            <a href="http://127.0.0.1:8000/delete/{{task.id}}">Delete</a>
+                        </div>
+                    </div>
+                    {% endif %}           
                     
 
                 {% endfor %}

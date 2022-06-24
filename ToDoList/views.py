@@ -39,7 +39,7 @@ def create_view(request):
     form = ToDoListForm(request.POST or None)
     if (form.is_valid()):
         form.save()
-        #form = ToDoListForm()
+
         return redirect('http://127.0.0.1:8000/')
     context = {
         'form': form
@@ -53,7 +53,6 @@ def edit_view(request, id):
         form = ToDoListForm(request.POST, instance = obj)
         if (form.is_valid()):
             form.save()
-            #form = ToDoListForm()
             return redirect('http://127.0.0.1:8000/')
     else:
         form = ToDoListForm(instance = obj)
@@ -67,7 +66,9 @@ def delete_view(request, id):
     obj = ToDoList.objects.get(id=id)
     obj.delete()
     return redirect('http://127.0.0.1:8000/')
-    context = {
 
-    }
-    return render(request, "home.html", context)
+def mark_view(request, id):
+    obj = ToDoList.objects.get(id=id)
+    obj.done = not obj.done
+    obj.save()
+    return redirect('http://127.0.0.1:8000/')

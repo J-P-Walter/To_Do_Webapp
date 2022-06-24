@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from ToDoList.views import home_view, create_view, edit_view, delete_view
+from ToDoList.views import home_view, create_view, edit_view, delete_view, mark_view
 
 
 urlpatterns = [
@@ -23,5 +23,6 @@ urlpatterns = [
     path('', home_view, name='To Do'),
     path('create/', create_view, name='Create'),
     path('edit/<int:id>/', edit_view, name='Edit'),
-    path('delete/<int:id>/', delete_view, name='Delete')
+    path('delete/<int:id>/', delete_view, name='Delete'),
+     path('mark/<int:id>/', mark_view, name='Mark')
 ]
