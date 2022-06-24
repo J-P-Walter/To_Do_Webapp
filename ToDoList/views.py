@@ -19,7 +19,7 @@ def home_view(request):
             task.delete()
         if (task.date == prev_date and task.done == False):
             prev_tasks.append(task)
-        elif (task.date == prev_date and task.done == True):
+        elif (task.date == prev_date and task.done == True): #Maybe not delete??
             task.delete()
         elif (task.date == today_date):
             today_task.append(task)

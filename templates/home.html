@@ -1,41 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-        {% if prev_tasks %}
+         {% if prev_tasks %}
             <div>
-                <h1> Previous Tasks </h1>
-                {% for task in prev_tasks %}
-                    {% if task.done == False %}
-                        <div class="task">
-                            <p>{{task.title}}</p>
-                            <p>{{task.description}}</p>
-                            <p>{{task.date}}</p>
-                        </div>
-                    {% else %}
-                    <div class="task done">
-                        <p>{{task.title}}</p>
-                        <p>{{task.description}}</p>
-                        <p>{{task.date}}</p>
-                    </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        {% endif %}
-
-        {% if today_tasks %}
-            <div>
-                <h1> Today's Tasks </h1>
-                {% for task in today_tasks %}
-
                 <script>
-                    function myFunction() {
-                        var element = document.getElementById("{{task.id}}");
+                    function pastMark(id) {
+                        var element = document.getElementById(id);
                         element.classList.toggle("marked");
-                        window.location.href = 'http://127.0.0.1:8000/mark/{{task.id}}';
+                        window.location.href = 'http://127.0.0.1:8000/mark/' + id;
                     }
                 </script> 
+                <h1> Yesterday's Tasks </h1>
+                {% for task in prev_tasks %}
                     {% if task.done == False %} 
-                    <div class="task row" id="{{task.id}}" onclick="myFunction()">
+                    <div class="task row" id="{{task.id}}" onclick="pastMark(id)">
                         <div class="column">                    
                                 <p>{{task.title}}</p>
                                 <p>{{task.description}}</p>
@@ -49,7 +27,7 @@
                         </div>
                     </div> 
                     {% else %}
-                    <div class="task row marked" id="{{task.id}}" onclick="myFunction()">
+                    <div class="task row marked" id="{{task.id}}" onclick="pastMark(id)">
                         <div class="column">                    
                                 <p>{{task.title}}</p>
                                 <p>{{task.description}}</p>
@@ -63,51 +41,138 @@
                         </div>
                     </div>
                     {% endif %}           
-                    
+                {% endfor %}
+            </div>
+        {% endif %}
 
+        {% if today_tasks %}
+            <div>
+                <script>
+                    function todayMark(id) {
+                        var element = document.getElementById(id);
+                        element.classList.toggle("marked");
+                        window.location.href = 'http://127.0.0.1:8000/mark/' + id;
+                    }
+                </script> 
+                <h1> Today's Tasks </h1>
+                {% for task in today_tasks %}
+                    {% if task.done == False %} 
+                    <div class="task row" id="{{task.id}}" onclick="todayMark(id)">
+                        <div class="column">                    
+                                <p>{{task.title}}</p>
+                                <p>{{task.description}}</p>
+                                <p>{{task.date}}</p>               
+                        </div>
+                        <div class="column">
+                            <a href="http://127.0.0.1:8000/edit/{{task.id}}">Edit</a>
+                        </div>
+                        <div class="column">
+                            <a href="http://127.0.0.1:8000/delete/{{task.id}}">Delete</a>
+                        </div>
+                    </div> 
+                    {% else %}
+                    <div class="task row marked" id="{{task.id}}" onclick="todayMark(id)">
+                        <div class="column">                    
+                                <p>{{task.title}}</p>
+                                <p>{{task.description}}</p>
+                                <p>{{task.date}}</p>               
+                        </div>
+                        <div class="column">
+                            <a href="http://127.0.0.1:8000/edit/{{task.id}}">Edit</a>
+                        </div>
+                        <div class="column">
+                            <a href="http://127.0.0.1:8000/delete/{{task.id}}">Delete</a>
+                        </div>
+                    </div>
+                    {% endif %}           
                 {% endfor %}
             </div>
         {% endif %}
 
         {% if week_tasks %}
             <div>
-                <h1> This Week's Tasks </h1>
+                <script>
+                    function weekMark(id) {
+                        var element = document.getElementById(id);
+                        element.classList.toggle("marked");
+                        window.location.href = 'http://127.0.0.1:8000/mark/' + id;
+                    }
+                </script> 
+                <h1> Week Tasks </h1>
                 {% for task in week_tasks %}
-                    {% if task.done == False %}
-                    <div class="task">
-                        <p>{{task.title}}</p>
-                        <p>{{task.description}}</p>
-                        <p>{{task.date}}</p>
-                    </div>
+                    {% if task.done == False %} 
+                    <div class="task row" id="{{task.id}}" onclick="weekMark(id)">
+                        <div class="column">                    
+                                <p>{{task.title}}</p>
+                                <p>{{task.description}}</p>
+                                <p>{{task.date}}</p>               
+                        </div>
+                        <div class="column">
+                            <a href="http://127.0.0.1:8000/edit/{{task.id}}">Edit</a>
+                        </div>
+                        <div class="column">
+                            <a href="http://127.0.0.1:8000/delete/{{task.id}}">Delete</a>
+                        </div>
+                    </div> 
                     {% else %}
-                    <div class="task done">
-                        <p>{{task.title}}</p>
-                        <p>{{task.description}}</p>
-                        <p>{{task.date}}</p>
+                    <div class="task row marked" id="{{task.id}}" onclick="weekMark(id)">
+                        <div class="column">                    
+                                <p>{{task.title}}</p>
+                                <p>{{task.description}}</p>
+                                <p>{{task.date}}</p>               
+                        </div>
+                        <div class="column">
+                            <a href="http://127.0.0.1:8000/edit/{{task.id}}">Edit</a>
+                        </div>
+                        <div class="column">
+                            <a href="http://127.0.0.1:8000/delete/{{task.id}}">Delete</a>
+                        </div>
                     </div>
-                    {% endif %}
-
+                    {% endif %}           
                 {% endfor %}
             </div>
         {% endif %}
 
         {% if future_tasks %}
             <div>
+                <script>
+                    function futureMark(id) {
+                        var element = document.getElementById(id);
+                        element.classList.toggle("marked");
+                        window.location.href = 'http://127.0.0.1:8000/mark/' + id;
+                    }
+                </script> 
                 <h1> Future Tasks </h1>
                 {% for task in future_tasks %}
-                    {% if task.done == False %}
-                        <div class="task">
-                            <p>{{task.title}}</p>
-                            <p>{{task.description}}</p>
-                            <p>{{task.date}}</p>
+                    {% if task.done == False %} 
+                    <div class="task row" id="{{task.id}}" onclick="futureMark(id)">
+                        <div class="column">                    
+                                <p>{{task.title}}</p>
+                                <p>{{task.description}}</p>
+                                <p>{{task.date}}</p>               
                         </div>
-                        {% else %}
-                        <div class="task done">
-                            <p>{{task.title}}</p>
-                            <p>{{task.description}}</p>
-                            <p>{{task.date}}</p>
+                        <div class="column">
+                            <a href="http://127.0.0.1:8000/edit/{{task.id}}">Edit</a>
                         </div>
-                    {% endif %}
+                        <div class="column">
+                            <a href="http://127.0.0.1:8000/delete/{{task.id}}">Delete</a>
+                        </div>
+                    </div> 
+                    {% else %}
+                    <div class="task row marked" id="{{task.id}}" onclick="futureMark(id)">
+                        <div class="column">                    
+                                <p>{{task.title}}</p>
+                                <p>{{task.description}}</p>
+                                <p>{{task.date}}</p>               
+                        </div>
+                        <div class="column">
+                            <a href="http://127.0.0.1:8000/edit/{{task.id}}">Edit</a>
+                        </div>
+                        <div class="column">
+                            <a href="http://127.0.0.1:8000/delete/{{task.id}}">Delete</a>
+                        </div>
+                    </div>
+                    {% endif %}           
                 {% endfor %}
             </div>
         {% endif %}
